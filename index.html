@@ -1,34 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Internet Lenta? Eu Resolvo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ThPro Login</title>
 <style>
-body { font-family: Arial; text-align: center; background: #0f172a; color: white; }
-.container { padding: 40px; }
-button { padding: 15px 25px; font-size: 18px; background: #22c55e; border: none; cursor: pointer; }
+body{font-family:Arial;background:#0b1020;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
+.box{background:#111827;padding:30px;border-radius:12px;width:300px}
+input{width:100%;padding:10px;margin:10px 0;border-radius:8px;border:none}
+button{width:100%;padding:10px;border:none;border-radius:8px;background:#7fe8ff;color:#000;font-weight:bold}
 </style>
 </head>
-
 <body>
-
-<div class="container">
-<h1>🚀 Internet Lenta? Wi-Fi Ruim?</h1>
-<p>Eu resolvo seu problema de conexão sem você sair de casa.</p>
-
-<h2>💻 Serviços:</h2>
-<p>✔ Otimização de Wi-Fi</p>
-<p>✔ Configuração de roteador</p>
-<p>✔ Internet lenta / queda de conexão</p>
-<p>✔ Atendimento remoto imediato</p>
-
-<h2>📲 Atendimento rápido via WhatsApp</h2>
-
-<a href="https://wa.me/5522992902570">
-<button>Falar Agora</button>
-</a>
-
+<div class="box">
+<h2>Login ThPro</h2>
+<form id="login">
+<input id="email" type="email" placeholder="Email" required>
+<input id="password" type="password" placeholder="Senha" required>
+<button type="submit">Entrar</button>
+</form>
 </div>
 
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+const supabase = createClient(
+"https://okraunqkyyaukavloztp.supabase.co",
+"sb_publishable_Ixu6vZGH-UrMhXoidtTChQ_dUxP-u0m"
+)
+
+document.getElementById("login").addEventListener("submit", async (e)=>{
+e.preventDefault()
+
+const email = document.getElementById("email").value
+const password = document.getElementById("password").value
+
+const { error } = await supabase.auth.signInWithPassword({ email, password })
+
+if(error){
+alert(error.message)
+return
+}
+
+window.location.href = "painel.html"
+})
+</script>
 </body>
 </html>
