@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel ThPro</title>
+<style>
+body{font-family:Arial;background:#0b1020;color:#fff;margin:0}
+.container{max-width:800px;margin:40px auto;padding:20px}
+.card{background:#111827;padding:15px;border-radius:12px;margin-bottom:15px}
+button{padding:10px;border:none;border-radius:8px;background:#7fe8ff;color:#000;font-weight:bold}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>Painel</h1>
+<p id="user"></p>
+<button id="logout">Sair</button>
+
+<div class="card">
+<h3>Curso Gratuito</h3>
+<a href="#">Acessar</a>
+</div>
+
+</div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+const supabase = createClient(
+"https://okraunqkyyaukavloztp.supabase.co",
+"sb_publishable_Ixu6vZGH-UrMhXoidtTChQ_dUxP-u0m"
+)
+
+const { data } = await supabase.auth.getSession()
+
+if(!data.session){
+window.location.href = "index.html"
+}
+
+document.getElementById("user").innerText = "Logado: " + data.session.user.email
+
+document.getElementById("logout").onclick = async ()=>{
+await supabase.auth.signOut()
+window.location.href = "index.html"
+}
+</script>
+
+</body>
+</html>
